@@ -47,7 +47,7 @@ def create_pdf_files(uploaded_file):
         customer_id_str = str(int(customer_id)) if customer_id else ''
         cv.setFont('mmt', 10) 
         cv.drawString(30, h - 120, f"顧客ID:{customer_id_str}")
-        cv.drawString(30, h - 60, 'お買い上げ明細書兼領収書')
+        cv.drawString(30, h - 60, 'お買い上げ明細書')
         cv.setFont('mmt', 12) 
         cv.drawString(30, h - 80, 'この度はお買い上げいただき、ありがとうございます。')
         cv.setFont('mmt', 10)
@@ -62,7 +62,7 @@ def create_pdf_files(uploaded_file):
         cv.drawString(350, h - 140, f"〒{record['ご依頼主郵便番号']}")
         cv.drawString(350, h - 155, str(record['ご依頼主住所1']))
         cv.drawString(350, h - 170, str(record['ご依頼主住所2']))
-        cv.drawString(350, h - 185, 'TEL 0120-444-636(平日9:30~17:30)')
+        #cv.drawString(350, h - 185, 'TEL 0120-000-000(平日9:30~17:30)')
 
         # 商品リストの描画
         items = get_items(record)
