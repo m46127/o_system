@@ -96,13 +96,12 @@ def create_pdf_files(uploaded_file):
         for i, item in enumerate(items):
             cv.drawString(x_start + 10, y_start - 20 * (i + 1) + 5, str(item['code']))
             cv.drawString(x_start + 110, y_start - 20 * (i + 1) + 5, item['name'])
-            cv.drawString(x_start + 310, y_start - 20 * (i + 1) + 5, str(item['count']))
+            cv.drawString(x_start + 310, y_start - 20 * (i + 1) + 5, str(int(item['count'])))
 
         # PDFの保存
         cv.showPage()
         cv.save()
     return output_files
-
 
 def get_items(record):
     items_dict = {}
@@ -121,15 +120,14 @@ def get_items(record):
                 item = {
                     'code': code,
                     'name': name,
-                    'count': count,
+                    'count': int(count) if pd.notna(count) else 0,  # 数量を整数型に変換
                 }
                 items_dict[code] = item
             else:
-                items_dict[code]['count'] += count
+                items_dict[code]['count'] += int(count) if pd.notna(count) else 0
 
     items = list(items_dict.values())
     return items
-
 
 def merge_pdf_in_dir(dir_path, dst_path):
     l = glob.glob(os.path.join(dir_path, '*.pdf'))
