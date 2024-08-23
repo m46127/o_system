@@ -9,8 +9,11 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
     return href
 
 def main():
-    st.title("Inventory Management System")
+    st.title("Inventory and Picking List Management")
+    
+    # ピッキングリストファイルのアップロード
     uploaded_picking_file = st.file_uploader("Choose a Picking Excel file", type="xlsx", key="picking")
+    # 在庫表ファイルのアップロード
     uploaded_inventory_file = st.file_uploader("Choose an Inventory Excel file", type="xlsx", key="inventory")
     
     if uploaded_picking_file and uploaded_inventory_file:
@@ -19,13 +22,13 @@ def main():
         picking_df['SKU'] = picking_df['SKU'].astype(str).str.strip().str.upper()
 
         # 在庫表のExcelファイルを読み込む
-        inventory_df = pd.read_excel(uploaded_inventory_file, header=5, usecols=[2])  # 6行目をヘッダーとして、'C'列を使用
-        inventory_df.columns = ['SKU']  # 読み込んだ列に 'SKU' という名前を設定
+        inventory_df = pd.read_excel(uploaded_inventory_file, usecols=[2], header=0)  # 'C'列を読み込む
+        inventory_df.columns = ['SKU']
         inventory_df['SKU'] = inventory_df['SKU'].astype(str).str.strip().str.upper()
         
         # ピッキングリストと在庫表をマージ
         merged_df = pd.merge(inventory_df, picking_df, on='SKU', how='left')
-        merged_df['合計数量'].fillna(0, inplace=True)  # 数量がない場合は0で埋める
+        merged_df['合計数量'].fillna(0, inplace=True)  # NaNを0で埋める
         
         # ファイルをダウンロードするためのリンクを作成
         output = io.BytesIO()
