@@ -52,7 +52,7 @@ def create_pdf_files(uploaded_file):
         cv.drawString(30, h - 80, 'この度はお買い上げいただき、ありがとうございます。')
         cv.setFont('mmt', 10)
         cv.drawString(30, h - 140, f"{record['お届け先名称1']}")
-        cv.drawString(65, h - 140, f"{record['お届け先名称2']} 様")
+        cv.drawString(75, h - 140, f"{record['お届け先名称2']} 様")
         cv.drawString(30, h - 155, f"〒{record['お届け先郵便番号']}")
         cv.drawString(30, h - 170, str(record['お届け先住所1']))
         cv.drawString(30, h - 185, str(record['お届け先住所2']))
